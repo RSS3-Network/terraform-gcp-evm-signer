@@ -34,12 +34,12 @@ resource "google_cloud_run_v2_service" "signer" {
 
       env {
         name  = "SIGNER_GCPKMS_KEY_RING"
-        value = google_kms_key_ring.primary.name
+        value = local.key_ring_name
       }
 
       env {
         name  = "SIGNER_GCPKMS_KEY"
-        value = google_kms_crypto_key.primary.name
+        value = local.crypto_key_name
       }
 
       env {
@@ -50,4 +50,11 @@ resource "google_cloud_run_v2_service" "signer" {
     }
 
   }
+}
+
+resource "google_cloud_run_service_iam_binding" "invoke" {
+  location = google_cloud_run_v2_service.signer.location
+  service  = google_cloud_run_v2_service.signer.name
+  role     = "roles/run.invoker"
+  members  = var.cloud_run_invoke_members
 }

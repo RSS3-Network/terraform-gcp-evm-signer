@@ -75,3 +75,9 @@ variable "cloud_run_resource_limit" {
     memory = "512Mi"
   }
 }
+
+variable "cloud_run_invoke_members" {
+  type        = list(string)
+  description = "The members that can invoke the Cloud Run service"
+  default     = []
+}
