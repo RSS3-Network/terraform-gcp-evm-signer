@@ -47,6 +47,11 @@ variable "service_account_name" {
   default     = ""
 }
 
+variable "cloud_run_location" {
+  type        = string
+  description = "The location of the Cloud Run service"
+}
+
 variable "cloud_run_image" {
   type        = string
   description = "The image to deploy to Cloud Run"

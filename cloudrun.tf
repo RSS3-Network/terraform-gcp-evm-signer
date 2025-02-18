@@ -8,7 +8,7 @@ locals {
 
 resource "google_cloud_run_v2_service" "signer" {
   name     = "${var.name}-signer"
-  location = var.location
+  location = var.cloud_run_location
   ingress  = var.cloud_run_ingress
 
   template {
@@ -47,6 +47,15 @@ resource "google_cloud_run_v2_service" "signer" {
         value = data.google_kms_crypto_key_latest_version.primary.version
       }
 
+      liveness_probe {
+        http_get {
+          path = "/healthz"
+        }
+        initial_delay_seconds = 30
+        period_seconds        = 15
+        timeout_seconds       = 1
+        failure_threshold     = 3
+      }
     }
 
   }
