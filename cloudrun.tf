@@ -1,8 +1,8 @@
 locals {
   common_envs = {
     SIGNER_TYPE              = "gcpkms"
-    SGINER_GCPKMS_PROJECT_ID = var.project
-
+    SIGNER_GCPKMS_PROJECT_ID = var.project
+    SIGNER_GCPKMS_LOCATION   = var.location
   }
 }
 
