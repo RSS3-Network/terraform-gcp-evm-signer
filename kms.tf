@@ -34,11 +34,11 @@ resource "google_kms_crypto_key" "primary" {
 }
 
 resource "google_kms_crypto_key_iam_binding" "primary" {
-  crypto_key_id = google_kms_crypto_key.primary[0].id
+  crypto_key_id = var.create_key_ring ? google_kms_key_ring.primary[0].id : data.google_kms_key_ring.external[0].id
   role          = "roles/cloudkms.signerVerifier"
   members       = ["serviceAccount:${google_service_account.cloud_run_service_account[0].email}"]
 }
 
 data "google_kms_crypto_key_latest_version" "primary" {
-  crypto_key = google_kms_crypto_key.primary[0].id
+  crypto_key = var.create_key_ring ? google_kms_key_ring.primary[0].id : data.google_kms_key_ring.external[0].id
 }
