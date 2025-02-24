@@ -21,6 +21,12 @@ data "google_kms_key_ring" "external" {
   project  = var.project
 }
 
+data "google_kms_crypto_key" "external" {
+  count    = var.create_crypto_key ? 0 : 1
+  name     = local.crypto_key_name
+  key_ring = var.create_key_ring ? google_kms_key_ring.primary[0].id : data.google_kms_key_ring.external[0].id
+}
+
 resource "google_kms_crypto_key" "primary" {
   count    = var.create_crypto_key ? 1 : 0
   name     = local.crypto_key_name
