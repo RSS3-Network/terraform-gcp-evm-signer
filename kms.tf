@@ -40,5 +40,5 @@ resource "google_kms_crypto_key_iam_binding" "primary" {
 }
 
 data "google_kms_crypto_key_latest_version" "primary" {
-  crypto_key = var.create_key_ring ? google_kms_key_ring.primary[0].id : data.google_kms_key_ring.external[0].id
+  crypto_key = var.create_crypto_key ? google_kms_crypto_key.primary[0].id : data.google_kms_crypto_key.external[0].id
 }
